@@ -11,7 +11,7 @@ public class LCS
         //String n1 = "mangoes";
         //String n2 = "mangoes";
   
-        String ret = LCS(n1, n2);
+        String ret = LCSmethod(n1, n2);
         System.out.println(ret);*/
 
         char[] alphabet = {'a','b','c','d','e','f','g','h',
@@ -34,14 +34,14 @@ public class LCS
             }
             long startT = System.nanoTime();
             String ret = null;
-            ret = LCS(n1,n2);
+            ret = LCSmethod(n1,n2);
             long endT = System.nanoTime();
             System.out.println("Alorithm at " + points + " takes " + (endT - startT));
         }
     
     }
     
-   public static String LCS(String one, String two)
+   public static String LCSmethod(String one, String two)
    {
         //get length of strings
         int len1 = one.length();
