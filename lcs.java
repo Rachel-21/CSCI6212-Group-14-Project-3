@@ -20,7 +20,7 @@ public class LCS
 
         //test strings at different length and time it.
         int points = 0;
-        for(points = 10; points<=100000; points = points*10)
+        for(points = 10; points<=10000; points = points*10)
         {
             String n1 = "";
             String n2 = "";
