@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     num_tests = 1
     total_time_ns = 0
-    normalization_factor = 1041.635945715738
+    normalization_factor = 0
 
     for length in test_lengths:
         for _ in range(num_tests):
