@@ -59,21 +59,26 @@ if __name__ == "__main__":
 
         average_time_ns = total_time_ns / num_tests
         ellapsed_times.append(average_time_ns)
-        theoretical_times.append(length * length * normalization_factor)
+        theoretical_times.append(length * length)
 
         print("Average time per call for length ", length," in nanoseconds:", average_time_ns)
 
 
-    sum = 0
+    avarage_ellapsed_sum = 0
     for time in ellapsed_times:
-        sum += time
+        avarage_ellapsed_sum += time
+    avarage_ellapsed_sum /= len(ellapsed_times)
     
-    sum_theoretical = 0
+    avarage_sum_theoretical = 0
     for time in theoretical_times:
-        sum_theoretical += time
+        avarage_sum_theoretical += time
+    avarage_sum_theoretical /= len(theoretical_times)
 
-    normalization_factor = sum / sum_theoretical
+    normalization_factor = avarage_ellapsed_sum / avarage_sum_theoretical
     print("Normalization factor:", normalization_factor)
+
+    for i in range(len(theoretical_times)):
+        theoretical_times[i] *= normalization_factor
 
    # Plot the data
     plt.plot(test_lengths, ellapsed_times, marker='o')
