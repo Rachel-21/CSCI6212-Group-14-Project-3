@@ -37,11 +37,12 @@ def longest_common_subsequence(X, Y):
 
 if __name__ == "__main__":
 
-    test_lengths = list(range(0, 10000, 100))  # Increasing sequence with a step size of 10
+    test_lengths = [10, 100, 1000, 2000, 3000, 4000, 5000, 6000, 10000]
+    #list(range(0, 10001, 100))  # Increasing sequence with a step size of 10
     ellapsed_times = []
     theoretical_times = []
 
-    num_tests = 1
+    num_tests = 10
     total_time_ns = 0
     normalization_factor = 0
 
@@ -80,7 +81,7 @@ if __name__ == "__main__":
     for i in range(len(theoretical_times)):
         theoretical_times[i] *= normalization_factor
 
-   # Plot the data
+    # Plot the ellapsed and theoritical times
     plt.plot(test_lengths, ellapsed_times, marker='o')
     plt.plot(test_lengths, theoretical_times, marker='x', label='n^2')
     plt.title('Test Length vs. Elapsed Time')
