@@ -1,5 +1,5 @@
 
-public class project3 
+public class LCS 
 {
     public static void main(String[] args) 
     {
