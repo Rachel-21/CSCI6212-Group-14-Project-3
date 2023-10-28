@@ -6,5 +6,5 @@ Once you clone this project on Linux/Macos:
     javac lcs.java
     java lsc 
   ```  
-
+Prints out the time in the command line. 
 
