@@ -1,86 +1,132 @@
-import time
-import random
-import string
+"""
+Code calculates the Longest common subsequence
+between two strings.
+"""
+from random import choice
+from statistics import mean
+from string import ascii_uppercase
+from textwrap import dedent
+from time import perf_counter_ns
+
 import matplotlib.pyplot as plt
 
-def generate_random_sequence(length):
-    return ''.join(random.choice(string.ascii_uppercase) for _ in range(length))
 
-def longest_common_subsequence(X, Y):
-    m = len(X)
-    n = len(Y)
+def generate_random_sequence(length) -> str:
+    """
+    Returns a random sequence of strings for
+    computation of LCS.
+    example sequence: 'LNIUNSWSBPDOZMBCLQBO'
+    :return: String
+    """
+    return "".join(choice(ascii_uppercase) for _ in range(length))
 
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
 
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if X[i - 1] == Y[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + 1
+class LongestCommonSubsequence:
+    def __init__(self, string_1, string_2):
+        self.string_1 = string_1
+        self.string_2 = string_2
+        self.str_1_len = len(string_1)
+        self.str_2_len = len(string_2)
+
+    def get_common_character_indexes(self) -> list:
+        """
+        Returns the indexes of the common characters in two strings
+        :return: dict
+        """
+
+        # create a zero list(list) of size m + 1
+        # Used to calculate the index of the strings that match in the two strings
+        common_char_index_list = [
+            [0] * (self.str_2_len + 1) for _ in range(self.str_1_len + 1)
+        ]
+
+        # Update the corresponding list values + 1
+        # if there is a match on the characters in both strings
+        for i in range(1, self.str_1_len + 1):
+            for j in range(1, self.str_2_len + 1):
+                if self.string_1[i - 1] == self.string_2[j - 1]:
+                    common_char_index_list[i][j] = (
+                        common_char_index_list[i - 1][j - 1] + 1
+                    )
+                else:
+                    common_char_index_list[i][j] = max(
+                        common_char_index_list[i - 1][j],
+                        common_char_index_list[i][j - 1],
+                    )
+
+        return common_char_index_list
+
+    def longest_common_subsequence(self) -> list:
+        """
+        Calculates the longest common_subsequence between two strings
+        :return: list
+        """
+
+        common_character_index_list = self.get_common_character_indexes()
+        lcs = []
+        i, j = self.str_1_len, self.str_2_len
+        while i > 0 and j > 0:
+            if self.string_1[i - 1] == self.string_2[j - 1]:
+                lcs.append(self.string_1[i - 1])
+                i -= 1
+                j -= 1
+            elif (
+                common_character_index_list[i - 1][j]
+                > common_character_index_list[i][j - 1]
+            ):
+                i -= 1
             else:
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                j -= 1
 
-    lcs = []
-    i, j = m, n
-    while i > 0 and j > 0:
-        if X[i - 1] == Y[j - 1]:
-            lcs.append(X[i - 1])
-            i -= 1
-            j -= 1
-        elif dp[i - 1][j] > dp[i][j - 1]:
-            i -= 1
-        else:
-            j -= 1
+        lcs = lcs[::-1]
+        return lcs
 
-    lcs = lcs[::-1]
-
-    return lcs
 
 if __name__ == "__main__":
-
-    test_lengths = list(range(0, 10000, 100))  # Increasing sequence with a step size of 10
-    ellapsed_times = []
+    test_values = [10, 100, 1000, 5000, 10000, 15000, 20000, 25000]
+    experimental_times = []
     theoretical_times = []
+    adjusted_theoretical_values = []
 
-    num_tests = 1
-    total_time_ns = 0
-    normalization_factor = 1041.635945715738
+    for test_value in test_values:
+        random_gen_string_1 = generate_random_sequence(test_value)
+        random_gen_string_2 = generate_random_sequence(test_value)
 
-    for length in test_lengths:
-        for _ in range(num_tests):
-            X = generate_random_sequence(length)
-            Y = generate_random_sequence(length)
-        
-            start_time = time.perf_counter()
-            lcs = longest_common_subsequence(X, Y)
-            end_time = time.perf_counter()
+        start_time = perf_counter_ns()
+        longest_common_subsequence = LongestCommonSubsequence(
+            random_gen_string_1, random_gen_string_2
+        ).longest_common_subsequence()
+        end_time = perf_counter_ns()
 
-            elapsed_time_ns = (end_time - start_time) * 1e9
-            total_time_ns += elapsed_time_ns
+        experimental_time_ns = end_time - start_time
+        with open("time_output.txt", "a") as f:
+            output_string = dedent(f"""\
+                String 1 : {random_gen_string_1}
+                String 2 : {random_gen_string_2}
+                Longest Common Subsequence : {longest_common_subsequence}
+                Time taken to perform subsequence on length {test_value} : {experimental_time_ns}
+            \n
+            """)
+            f.write(output_string.lstrip())
 
-        average_time_ns = total_time_ns / num_tests
-        ellapsed_times.append(average_time_ns)
-        theoretical_times.append(length * length * normalization_factor)
+        experimental_times.append(experimental_time_ns)
 
-        print("Average time per call for length ", length," in nanoseconds:", average_time_ns)
+        theoretical_time = test_value * test_value  # n1*n2
+        theoretical_times.append(theoretical_time)
 
+    experimental_time_avg = mean(experimental_times)
+    theoretical_time_avg = mean(theoretical_times)
 
-    sum = 0
-    for time in ellapsed_times:
-        sum += time
-    
-    sum_theoretical = 0
-    for time in theoretical_times:
-        sum_theoretical += time
+    scaling_constant = experimental_time_avg / theoretical_time_avg
 
-    normalization_factor = sum / sum_theoretical
-    print("Normalization factor:", normalization_factor)
+    for each_element in theoretical_times:
+        adjusted_theoretical_values.append((each_element * scaling_constant))
 
-   # Plot the data
-    plt.plot(test_lengths, ellapsed_times, marker='o')
-    plt.plot(test_lengths, theoretical_times, marker='x', label='n^2')
-    plt.title('Test Length vs. Elapsed Time')
-    plt.xlabel('Test Length')
-    plt.ylabel('Elapsed Time (ns)')
+    # Plot the data
+    plt.plot(test_values, experimental_times, marker="o")
+    plt.plot(test_values, adjusted_theoretical_values, marker="x", label="n^2")
+    plt.title("Test Length vs. Elapsed Time")
+    plt.xlabel("Test Length")
+    plt.ylabel("Elapsed Time (ns)")
     plt.grid(True)
     plt.show()
-
