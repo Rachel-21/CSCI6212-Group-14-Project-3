@@ -1,4 +1,4 @@
-Project 3 Longest Common Subsequence 
+# Project 3 Longest Common Subsequence 
 Rachel Gonzalez Rodriguez - G37147365
 Srinivas Ravindranath - G22058521
 Ozgun Ozkan - G39576650 
