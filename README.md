@@ -1,6 +1,6 @@
 # Project 3 Longest Common Subsequence 
-Rachel Gonzalez Rodriguez - G37147365
-Srinivas Ravindranath - G22058521
+Rachel Gonzalez Rodriguez - G37147365 
+Srinivas Ravindranath - G22058521 
 Ozgun Ozkan - G39576650 
 
 # How to run the following program
