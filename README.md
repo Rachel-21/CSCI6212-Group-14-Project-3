@@ -9,13 +9,14 @@ This repository houses the code for our CS6212 project.
 
 ### Requirements
 
-The script is compatible to run with **python3**. 
-
-**Mathplotlib** library is necessary:
-
+The script is compatible to run with **python3**.   
+If running on VSCode you might need:   
   `pip3 install --upgrade pip`  
   `pip3 install sip`  
   `sudo apt-get install python3-pyqt5`   
+
+**Mathplotlib** library is necessary:
+
 ​	`pip3 install matplotlib` 
 
 ### How to run the program
