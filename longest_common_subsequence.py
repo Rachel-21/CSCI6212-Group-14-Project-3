@@ -84,36 +84,37 @@ class LongestCommonSubsequence:
 
 if __name__ == "__main__":
   
-    test_values = [10, 100, 1000, 5000, 10000, 15000, 20000, 25000]
+    test_values = [10, 100, 1000, 5000, 10000, 15000]
     experimental_times = []
     theoretical_times = []
     adjusted_theoretical_values = []
 
-    for test_value in test_values:
-        random_gen_string_1 = generate_random_sequence(test_value)
-        random_gen_string_2 = generate_random_sequence(test_value)
+    with open("time_output.txt", "w") as f:
+        for test_value in test_values:
+            random_gen_string_1 = generate_random_sequence(test_value)
+            random_gen_string_2 = generate_random_sequence(test_value)
 
-        start_time = perf_counter_ns()
-        longest_common_subsequence = LongestCommonSubsequence(
-            random_gen_string_1, random_gen_string_2
-        ).longest_common_subsequence()
-        end_time = perf_counter_ns()
+            start_time = perf_counter_ns()
+            longest_common_subsequence = LongestCommonSubsequence(
+                random_gen_string_1, random_gen_string_2
+            ).longest_common_subsequence()
+            end_time = perf_counter_ns()
 
-        experimental_time_ns = end_time - start_time
-        with open("time_output.txt", "a") as f:
+            experimental_time_ns = end_time - start_time
+
             output_string = dedent(f"""\
                 String 1 : {random_gen_string_1}
                 String 2 : {random_gen_string_2}
                 Longest Common Subsequence : {longest_common_subsequence}
                 Time taken to perform subsequence on length {test_value} : {experimental_time_ns}
-            \n
-            """)
+                \n
+                """)
             f.write(output_string.lstrip())
 
-        experimental_times.append(experimental_time_ns)
+            experimental_times.append(experimental_time_ns)
 
-        theoretical_time = test_value * test_value  # n1*n2
-        theoretical_times.append(theoretical_time)
+            theoretical_time = test_value * test_value  # n1*n2
+            theoretical_times.append(theoretical_time)
 
     experimental_time_avg = mean(experimental_times)
     theoretical_time_avg = mean(theoretical_times)
