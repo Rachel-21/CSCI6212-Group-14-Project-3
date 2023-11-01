@@ -12,7 +12,9 @@ This repository houses the code for our CS6212 project.
 The script is compatible to run with **python3**. 
 
 **Mathplotlib** library is necessary:
-
+  `pip3 install --upgrade pip`
+  `pip3 install sip`
+  `sudo apt-get install python3-pyqt5`
 ​	`pip3 install matplotlib`
 
 ### How to run the program
