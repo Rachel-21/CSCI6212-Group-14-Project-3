@@ -9,21 +9,41 @@ This repository houses the code for our CS6212 project.
 
 ### Requirements
 
-The script is compatible to run with **python3**.   
-If running on VSCode you might need:   
-  `pip3 install --upgrade pip`  
-  `pip3 install sip`  
-  `sudo apt-get install python3-pyqt5`   
+The script is compatible to run with **python3**. 
 
-**Mathplotlib** library is necessary:
+**Matplotlib** library is necessary:
 
-​	`pip3 install matplotlib` 
+Install directly on system:
+
+```
+pip3 install matplotlib
+```
+
+Install using virtualenv (keeps it separate from system packages):
+```
+pip3 install virtualenv
+python3 -m venv .venv
+source .venv/bin/activate 
+pip3 install matplotlib
+```
+
+In case of issue on WSL or linux systems:
+```
+pip3 install --upgrade pip
+pip3 install sip
+sudo apt-get install python3-pyqt5    # for linux systems only
+```
 
 ### How to run the program
 
 Run the script only, you can change the input lengths by manuplating the **test_values** array:
 
-`python3 ./longest_common_subsequence.py`
+```
+python3 ./longest_common_subsequence.py 
+```
 
-Plots the graph and creates the 'time_output.txt'. 
+**NOTE**: Please note that running the above code takes some time as this code is memory intensive so if the code 
+looks like its stuck, it is not stuck so, **please do not exit if it looks its stuck**.
+
+Plots the graph and creates the 'outputs.txt'. 
 
