@@ -43,7 +43,7 @@ python3 ./longest_common_subsequence.py
 ```
 
 **NOTE**: Please note that running the above code takes some time as this code is memory intensive so if the code 
-looks like its stuck, it is not stuck.  **please do not exit if it looks stuck**.
+looks like it's stuck, it is not stuck.  **Please do not exit if it looks stuck**.
 
 Plots the graph and creates the 'outputs.txt'. 
 
